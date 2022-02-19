@@ -1,5 +1,5 @@
 # Todly
-Learning and exploring React Native with pck like expo.
+Learning and exploring React Native with pck like expo. I used Android Studios to setup android emulator.
 
 # 19 Feb 2022, 10:43.
 Simple design was made also added a component task for later use to pass our tasks and manage state 
