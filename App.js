@@ -1,14 +1,33 @@
 import { StatusBar } from 'expo-status-bar';
-import { TouchableOpacity, KeyboardAvoidingView, TextInput, Platform, StyleSheet, Text, View } from 'react-native';
+import { TouchableOpacity, KeyboardAvoidingView, TextInput, Platform, StyleSheet, Text, View, Keyboard, Touchable } from 'react-native';
 import Task from "./components/task";
 import React, { useState } from "react";
 
 export default function App() {
   // useState
   const [task, setTask] = useState();
+  const [taskItems, setTaskItems] = useState([]);
 
   const handleAddTask = () => {
-    console.log(task);
+    // If we are running on live mobile
+    // This will hide keyboard after input
+    Keyboard.dismiss();
+    // Whatever was in taskItems array
+    // Task appends to it
+    setTaskItems([...taskItems, task]);
+    // Clear the input area
+    setTask(null);
+    // console.log(task);
+  };
+
+  const completedTask = (index) => {
+    let itemsCopy = [...taskItems];
+    // Remove one item from the array
+    // And store back to itemsCopy
+    itemsCopy.splice(index, 1);
+    // Set taskItems to the itemsCopy
+    // And dont include the one we deleted
+    setTaskItems(itemsCopy);
   };
  
 
@@ -21,8 +40,15 @@ export default function App() {
 
         <View style={styles.items}>
           {/* This is where the tasks will go */}
-            <Task text={"Task one"} />
-            <Task text={"Task two"} />
+          {
+            taskItems.map((item, index) => {
+              return <TouchableOpacity key={index} onPress={() => completedTask(index)}>
+                <Task text={item}/>
+              </TouchableOpacity>
+            })
+          }
+            {/* <Task text={"Task one"} />
+            <Task text={"Task two"} /> */}
         </View>
 
 
